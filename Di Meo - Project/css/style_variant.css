@@ -1,0 +1,786 @@
+/* 1. Definiamo la gerarchia ufficiale in maiuscolo */
+@layer IMPOSTAZIONI, RESET, MACRO_LAYOUT, COMPONENTS;
+
+/* 2. Sottolivelli profondi a 3 livelli (mantengono il punto perché sotto hanno tre sotto-blocchi) */
+@layer COMPONENTS.atom.cta_button;
+@layer COMPONENTS.atom.badge;
+@layer COMPONENTS.atom.widget;
+@layer COMPONENTS.carousel.base;
+@layer COMPONENTS.carousel.dot_controls;
+@layer COMPONENTS.carousel.hero;
+@layer COMPONENTS.carousel.paginated;
+
+/*  Essendo dichiarati dentro le parentesi di COMPONENTS (riga 157), nell'indice iniziale vanno scritti così */
+@layer COMPONENTS.header;
+@layer COMPONENTS.navbar;
+@layer COMPONENTS.menu;
+@layer COMPONENTS.showcase;
+@layer COMPONENTS.card;
+@layer COMPONENTS.infobox;
+
+
+@layer IMPOSTAZIONI {
+
+  /* ==========================================================================
+     1. GLOBAL SETTINGS & VARIABLES (La centrale di comando)
+     ========================================================================== */
+
+  :root {
+    
+    /* PALETTE */
+    --color-primary: #1e293b;
+    --color-success: #10b981;
+    --color-danger: #ef4444;
+    --color-bg-light: #F6F6F6;
+    --color-text-dark: #111827;
+    --color-text-muted: #6b7280;
+    --color-border: #E5E7EB;
+
+    /* SPACING */
+    --gap-fluid: clamp(1rem, 2vw, 1.5rem);
+    
+    /* TIPOGRAPHY: MOBILE FIRST */
+    --font-titles: 'Bebas Neue', sans-serif;
+    --font-main: 'Roboto', sans-serif;
+    --fs-title: 1.50rem; /* I titoli partono compatti sullo smartphone */
+    --fs-body: 0.90rem;
+  }
+
+        /* ==========================================================================
+           1.2 STEP INTERMEDIO: TIPOGRAPHY TABLET (Da 768px a 1023px)
+           ========================================================================== */
+        @media (min-width: 768px) {
+          :root {
+            --fs-title: 1.85rem; /* Crescita moderata per i tablet */
+            --fs-body: 0.95rem;
+          }
+          }
+          /* ==========================================================================
+             3. STEP FINALE: TIPOGRAPHY DESKTOP (Da 1024px in su)
+             ========================================================================== */
+          @media (min-width: 1024px) {
+            :root {
+              --fs-title: 2.40rem; /* Massimo splendore su monitor grandi, ottimo per Bebas Neue */
+              --fs-body: 1.00rem;
+            }
+  }
+}
+@layer RESET {
+  /* ==========================================================================
+     2. BASE & RESET (Pulizia dei default del browser)
+     ========================================================================== */
+
+      *, *::before, *::after {
+        box-sizing: border-box; /* lo spazio indicato da height e width include padding e border size */
+        margin: 0;
+        padding: 0;
+      }
+
+      /* STILI BASE DEL SITO */
+      body {
+        margin: 0;
+        font-family: var(--font-main);
+        background-color: var(--color-bg-light);
+        color: var(--color-text-dark);
+      }
+
+      /* 🟢 ASSEGNAZIONE DEL FONT BEBAS NEUE A TUTTI I TITOLI DEL SITO */
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-titles);
+        font-weight: normal; /* Bebas Neue è un font prevalentemente all-caps e già "bold" di natura */
+        letter-spacing: 0.05em; /* Un micro-spazio tra le lettere ne migliora la leggibilità */
+      }
+      /* Scaliamo proporzionalmente i titoli partendo dalla variabile del Layer 1 */
+      h1 { font-size: calc(var(--fs-title) * 1.4); } /* Il titolo più grande */
+      h2 { font-size: var(--fs-title); }             /* Es: il titolo della vetrina */
+      h3 { font-size: calc(var(--fs-title) * 0.85); } /* Es: il titolo del prodotto nella card */
+      h4 { font-size: calc(var(--fs-title) * 0.7); }  /* Es: la variante del prodotto */
+
+      /* lE IMMAGINI OCCUPANO TUTTO LO SPAZIO DEL CONTAINER (MA NON ESCONO DAI BORDI) */
+      img {
+        max-width: 100%;
+        display: block; /* Elimina lo spazio vuoto nativo che i browser mettono sotto le immagini */
+      }
+
+      a {
+        text-decoration: none; /* Elimina la sottolineatura blu standard da tutti i link del sito */
+        color: inherit;        /* Forza i link a ereditare il colore del testo circostante */
+      }
+  }
+@layer MACRO_LAYOUT{
+  /* ==========================================================================
+     3. MACRO-LAYOUT : L'ARCHITETTURA DELLA PAGINA WEB
+     ========================================================================== */
+  
+  /* --- COMPORTAMENTO BASE (Smartphone - Mobile First) E TABLET --- */
+  
+    /* la gabbia che contiene main e navbar, utile per disporli in riga o in colonna a seconda del dispositivo */
+    .site-container { 
+      width: 100%; 
+    }
+
+    main { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 3rem; 
+      padding: 0 1rem 3rem 1rem; /* Padding interno per non far toccare le card ai bordi dello schermo */
+    }
+
+    /* --- FOOTER --- */
+    footer {
+        background-color: var(--color-primary); 
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        width: 100%;
+
+    }
+
+    /* --- 💻 COMPORTAMENTO DESKTOP --- */
+      @media (min-width: 1024px) {
+
+        main { 
+          margin: 0; 
+          gap: 6rem; 
+          padding: 3rem; 
+        }
+
+        /* override del site container perché deve disporsi a griglia 1x2 */
+        .site-container {
+          display: grid;
+          grid-template-columns: minmax(260px, 300px) 1fr; /* la navbar occuperà minimo 260 e massimo 300px  + tutto lo spazio rimasto ai prodotti */
+          align-items: start;
+        }
+      }
+}
+@layer COMPONENTS {
+  @layer atom {
+/* ==========================================================================
+   4. 1. UTILITY & ATOMS 
+   ========================================================================== */
+
+
+    @layer cta_button {
+       /* --- ATOMO: COMPONENTE PULSANTE GLOBALE --- */
+      /* ASPETTO DEL CTA BUTTON */
+      .cta-btn {
+        display: flex; 
+        padding: 0.85rem;
+        background-color: var(--color-primary);
+        color: white;
+        border-radius: 8px;
+        width: fit-content;
+        transition: all 0.25s ease;
+      }
+      /* COMPORTAMENTO: al passaggio del mouse: cambio colore di sfondo e si sposta di 2px in verticale */
+      .cta-btn:hover {
+        background-color: var(--color-success);
+        transform: translateY(-2px);
+      }
+    }
+    @layer badge {
+    /* --- ATOMO: COMPONENTE BADGE GLOBALE --- */
+
+    /* ASPETTO DEL BADGE */
+    .badge {
+      position: absolute;
+      z-index: 5;   /* Lo tiene sopra l'immagine di sfondo */
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+     }
+    /* ASPETTO E POSIZIONAMENTO DEL BADGE SCONTO */
+      .badge--discount{
+            top: 10px;    /* Lo distanzia dal bordo superiore della card */
+            left: 15px;  /* Lo distanzia dal bordo sinistro della card */
+            background-color: var(--color-danger);
+            animation: battitoSconto 2s infinite alternate;
+          }
+    /* COMPORTAMENTO ANIMAZIONE DEL BADGE */
+      @keyframes battitoSconto {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+          }
+      }
+    @layer widget {
+       /* --- ATOMO: COMPONENTE WIDGET GLOBALE --- */
+
+    /* ASPETTO DEL WIDGET */
+    .widget {
+      position: fixed;
+      bottom: 20px; /* Ancorato a 20px dal fondo dello schermo */
+      right: 20px;  /* Ancorato a 20px dal bordo destro */
+      z-index: 1000;/* Rimane sopra a qualsiasi altro elemento visivo della pagina */
+      }
+      
+    /* 🟢 OVERRIDE DEL MASTER COMPONENT: Modifichiamo il .cta-btn solo quando si trova nel widget */
+    .widget .cta-btn {
+      background-color: var(--color-success); /* Cambia lo sfondo nel verde attivo dal tuo :root */
+      border-radius: 50%;                    /* Trasforma il rettangolo in un cerchio perfetto */
+      width: 60px;                           /* Blocca la larghezza geometrica */
+      height: 60px;                          /* Blocca l'altezza geometrica */
+      padding: 0;                            /* Svuota il padding interno originale del bottone */
+      display: flex;                         /* Attiva Flexbox per centrare l'icona/emoji internamente */
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Aggiunge un'ombra per farlo "galleggiare" sulla pagina */
+      }
+ 
+    /* COMPORTAMENTO PASSAGGIO MOUSE */
+    .widget .cta-btn:hover {
+      transform: scale(1.08); /* Un leggero effetto zoom per dare un feedback immediato all'utente */
+      opacity: 1;             /* Mantiene la massima visibilità rispetto all'hover opaco standard */
+      }
+    }
+  
+  }
+  @layer header {
+    
+    /* ==========================================================================
+   4.2 HEADER NAVBAR E MENU
+   ========================================================================== */
+    
+    /* 4.2.1 HEADER: deve essere sempre visibile e stare fisso in alto */
+    header { 
+        position: sticky; 
+        top: 0; 
+        z-index: 100; 
+    }
+  }
+  @layer navbar{
+    /* 4.3 NAVBAR: gli elementi interni devono essere centrati e distribuiti lungo tutto lo spazio */
+    .navbar {
+      background-color: var(--color-primary);
+      color: white;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem; /* Spazio inferiore su smartphone */
+      display: flex;
+      justify-content: space-between; /* Logo a sinistra, menu a destra su mobile */
+      align-items: center;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+        /* gestione delle caratteristiche tipografiche del logo */
+        .navbar__logo {
+          font-family: var(--font-titles);
+          font-size: 1.4rem;
+          letter-spacing: 0.05em;
+        }
+    
+     /* 💻 ADATTAMENTO DESKTOP: Quando la navbar entra nella colonna della Grid (300px) */
+    @media (min-width: 1024px) {
+      .navbar {
+        flex-direction: column;    /* Incolonna Logo e Menu in verticale nella sidebar */
+        align-items: flex-start;   /* Allinea tutto a sinistra */
+        justify-content: flex-start;
+        height: 100vh;             /* Copre tutta l'altezza dello schermo (Viewport Height) */
+        position: sticky;          /* Rimane bloccata durante lo scroll della pagina */
+        top: 0;
+        padding: 3rem 2rem;
+        gap: 3rem;                 /* Crea spazio verticale tra il logo e l'inizio del menu */
+        margin-bottom: 0;          /* Resetta il margine inferiore del mobile */
+        margin-right: 2rem;        /* Spinge l'area 'main' verso destra */
+      }
+    }
+  }
+  @layer menu{
+    /* 4.4. MENU: GESTIONE DELLO SPAZIO E ASPETTO DELLE VOCI DEL MENU */
+      .menu { 
+        display: flex; 
+        gap: var(--gap-fluid); /* Distanza fluida tra i link gestita nel Layer IMPOSTAZIONI */
+        list-style: none;      /* essendo un tag <ul> eliminiamo l'elenco puntato */
+        margin: 0;
+        padding: 0;
+    } 
+        /* 🟢 PULIZIA LISTA INCLUSA E GESTIONE TIPOGRAFIA DEI LINK */
+          .menu a { 
+            color: white; 
+            font-weight: 500; 
+            font-size: 0.95rem;
+            transition: color 0.2s ease; 
+        }
+        /* COMPORTAMENTO MENU: cambia colore quando passi su una voce col mouse */
+          .menu a:hover { color: var(--color-success); 
+      }
+      @media (min-width: 1024px) {
+        .menu {
+          flex-direction: column;    /* Anche i link del menu vanno in verticale uno sotto l'altro */
+          gap: 1.25rem;
+          width: 100%;
+        }
+    }
+  }
+  @layer showcase{
+    @layer base{
+     /* 4.5 LA VETRINA CON TITOLO CHE PUO CONTENERE CAROSELLO E PULSANTI DI SCORRIMENTO */
+      .showcase { 
+        width: 100%; 
+      }
+        .showcase__title {
+          font-family: var(--font-titles);
+          font-size: 1.85rem; /* 🎯 Leggermente ridotto per renderlo più geometrico e rifinito */
+          margin-bottom: 2rem; /* Spinge giù il carosello e crea il corridoio visivo */
+          display: flex;
+          align-items: center;
+          /* 🎯 LE TRE RIGHE DA AGGIUNGIRE PER CAMBIARE IMPATTO VISIVO */
+          font-weight: 800;             /* Forza un grassetto marcato e d'impatto (Ultra-Bold) */
+          letter-spacing: -0.025em;     /* Stringe leggermente le lettere (stile premium/Apple) */
+          color: var(--color-black, #111111); /* Colore scuro solido per staccare dal testo normale */
+        }
+    }
+    @layer hero {
+      /* variante HERO per contenere il carosello con scorrimento a singola card centrata */
+      .showcase--hero{
+        background-color: #faf9f6; /* essendo la vetrina principale gli diamo un sfondo */
+        padding: 4rem 0.5rem; /* Spazio verticale per far respirare il blocco */
+}
+    }
+  }
+  @layer carousel {
+    
+   /* ==========================================================================
+   4.6  COMPONENTI COMPLESSI: CAROSELLI E CONTROLLI DIREZIONALI
+    LOGICA: 1. Carosello base, 2. controlli, 3. varianti carosello base
+   ========================================================================== */  
+    
+    @layer base{
+      
+      /* ============================================================
+       * 4.3.1 CAROSELLO BASE 
+       * Mobile: scorrimento verticale fino a 4 elementi, altrimenti scorrimento orizzontale
+       * Desktop : griglia fino a 4 elementi, altrimenti scorrimento orizzontale (con frecce)
+       * ======================================================================================*/
+      
+      /* COMPORTAMENTO: scroll orizzontale, un item alla volta */
+      .carousel { 
+        position: relative; 
+        width: 100%; 
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;              /* Attiva lo scorrimento orizzontale nativo */
+        scroll-snap-type: x mandatory; /* Attiva l'effetto calamita */
+        
+        /* 🟢 OCCULTAMENTO BARRA UNIVERSALE */
+        scrollbar-width: none;         /* Nasconde la barra su Firefox */
+        -ms-overflow-style: none;       /* Nasconde la barra su IE/Edge */
+      }
+      /* Nasconde la barra sui browser basati su Webkit (Chrome, Safari, Opera) */
+      .carousel::-webkit-scrollbar { 
+        display: none; 
+      }
+      
+      /* STRUTTURA ITEM DEL CAROSELLO: ad essere calamitate e a scorrere sono i singoli item */
+      .carousel .card {
+        scroll-snap-align: start;
+        min-width: 0; /* 👈 Resetta le percentuali fisse ereditate */
+      }
+      /* COMPORTAMENTO CAROSELLO : Quando si passa sopra al carosello, abbassa l'opacità di tutte le card */
+      .carousel:hover .card {
+        opacity: 0.4;
+      }
+      /* COMPORTAMENTO ITEM: Riporta a opacità piena SOLO la card attualmente in hover */
+      .carousel .card:hover {
+        opacity: 1;
+      }
+        
+      /* 📱 1. COMPORTAMENTO SMARTPHONE & TABLET (Sotto i 1024px) */
+      @media (max-width: 1023px) {
+        
+        /* ==========================================================================
+         * CASO A: Fino a 4 elementi -> Scorrimento Verticale (Incolonnate)
+         * ========================================================================== */
+        
+          /* LAYOUT CAROSELLO (escluse le varianti) */
+          .carousel:not(.carousel--hero):not(.carousel--paginated) {
+            display: flex;
+            flex-direction: column; /* Costringe le card a stare una sotto l'altra */
+            gap: var(--gap-fluid);
+            width: 100%;
+            overflow-x: visible;    /* Disattiva lo scroll orizzontale */
+          }
+
+        /* LAYOUT SINGOLO ITEM (escluse le varianti) */
+          .carousel:not(.carousel--hero):not(.carousel--paginated) .card {
+            width: 100%;            /* Occupa tutta la larghezza disponibile */
+            min-width: 0;           /* Resetta i vincoli orizzontali */
+            height: auto;
+          }
+
+        /* ==========================================================================
+         * CASO B: Da 5 elementi in poi -> Scorrimento Orizzontale (Riga unica)
+         *========================================================================= */
+        
+          /* LAYOUT CAROSELLO (escluse le varianti) */
+        .carousel:not(.carousel--hero):not(.carousel--paginated):has(> .card:nth-child(5)) {
+          flex-direction: row;    /* Ripristina la disposizione in riga */
+          flex-wrap: nowrap;      /* Blocca l'andata a capo */
+          overflow-x: auto;       /* Attiva lo scroll orizzontale nativo */
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch; /* riattivo lo scroll tramite touch */
+        }
+        
+        /* LAYOUT ITEM (escluse le varianti) */
+        /* Imposta la dimensione fissa delle card SOLO quando si attiva lo scroll */
+        .carousel:not(.carousel--hero):not(.carousel--paginated):has(> .card:nth-child(5)) .card {
+          flex: 0 0 260px;  /* mantiene la dimensione senza allargarsi, non si restringe se lo spazio è piccolo, dimensione effettiva */  
+          min-width: 260px;
+          scroll-snap-align: start; /*il figlio si allinea al contenitore */
+          height: auto;           
+        }
+        
+        /* Mostra i controlli sotto al carosello SOLO se ci sono più di 4 elementi */
+        .carousel:not(.carousel--hero):not(.carousel--paginated):has(> .card:nth-child(5)) ~ .carousel__controls {
+          display: flex;
+        }
+      }
+      /* 💻 COMPORTAMENTO DESKTOP CONDIZIONALE (Sopra i 1024px) */
+      @media (min-width: 1024px) {
+        
+       /* ==========================================
+         CASO A: Griglia fissa (Fino a 4 elementi)
+         ========================================== */
+        
+          /* LAYOUT CAROSELLO: Trasformiamo il CAROSELLO in una Griglia pura */
+        .carousel:not(.carousel--hero):not(.carousel--paginated):not(:has(> :nth-child(5))) {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);  /* Crea esattamente 2 colonne uguali */ 
+          grid-auto-rows: 1fr;  /* Forza TUTTE le righe generate ad avere la stessa altezza della card più alta */ 
+          gap: var(--gap-fluid); 
+          width: 100%;
+          overflow-x: visible; /* Spegne lo scroll orizzontale in questo caso */
+        }
+        
+        /* LAYOUT ITEM all'interno della Griglia */
+        .carousel:not(.carousel--hero):not(.carousel--paginated):not(:has(> :nth-child(5))) .card {
+          /* Resettiamo i vecchi vincoli flex che darebbero fastidio a Grid */
+          flex: none; /* non siamo più flexbox */
+          width: 100%; 
+          max-width: 100%;
+          height: 100%; /* Forza la card a stirarsi per occupare tutta l'altezza della sua cella */ 
+          scroll-snap-align: none; /* essendo disposti a griglia, si disattiva l'effetto calamita */
+        }
+        
+     /* =====================================================================
+       * CASO B: Da 5 elementi in su -> Resta in riga singola con scorrimento
+       * saranno visibili solo 4 item per essere coerente con la variante paginated 
+       * ======================================================================*/
+        
+        /* LAYOUT CAROSELLO: da griglia torna flex e occupa tutto lo spazio orizzontale */
+        .carousel:has(> :nth-child(5)) {
+          display: flex;              
+          flex-direction: row;
+          flex-wrap: nowrap; /* se lo spazio termina, gli item non devono andare a capo, ma scrollare */          
+          align-items: stretch;       /* gli item si allungano e si adattano alle dimensioni del più grande */
+          gap: var(--gap-fluid);
+          overflow-x: auto;
+          width: 100%;
+        }
+        
+        /* LAYOUT CARD: Assicura che sul monitor desktop si vedano esattamente 4 card perfette alla volta */
+        .carousel:has(> :nth-child(5)) .card {
+          /* 📐 25% di larghezza meno i 3/4 del gap fluido */
+          flex: 0 0 calc(25% - (var(--gap-fluid) * 3 / 4));            
+          width: calc(25% - (var(--gap-fluid) * 3 / 4));
+          min-width: 0; /* Impedisce a Flexbox di ignorare il calc se il testo è lungo */
+        }
+        
+        /* Attivazione visiva dei pallini sotto al carosello lungo */
+        .carousel:has(> :nth-child(5)) + .carousel__controls {
+          display: flex;
+        }
+      }
+      
+    }
+    
+    @layer dot_controls {
+      
+      /* 🛑 REGOLA DI PARTENZA: Di default i pallini nascono NASCONTI ovunque */
+      .carousel__controls {
+        display: none; 
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+      
+      /* Stile universale del singolo pallino (Valido per tutto il sito) */
+      .carousel__dot {
+        width: 10px;
+        height: 10px;
+        border: none;
+        border-radius: 50%;
+        background-color: var(--color-border);
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.25s ease;
+      }
+      
+      /* COMPORTAMENTO ITEM: al passaggio del mouse il pallino cambia colore */
+      .carousel__dot:hover { 
+        background-color: var(--color-text-muted); 
+      }
+      
+      /* STILE DOT ATTIVO */
+      .carousel__dot--active { 
+        width: 24px; 
+        border-radius: 20px; 
+        background-color: var(--color-primary); 
+      }
+    }
+    
+    @layer hero {
+      
+       /* =========================================================
+        * 4.3.2 CAROSELLO VARIANTE HERO
+        *   Scorrimento orizzontale di una card alla volta
+        * ===================================================== */
+      
+      /* 1. LAYOUT CAROSELLO: a differenza del carosello base, non si devono vedere le card successive */
+      .carousel--hero {
+        flex-wrap: nowrap;          /* 🟢 FONDAMENTALE: Impedisce tassativamente alle card di andare a capo! */
+        gap: 0;
+      }
+      
+      /* LAYOUT ITEM: Ogni card all'interno della variante Hero copre il 100% dello spazio visivo */
+      .carousel--hero .card {
+        flex: 0 0 100%; /* la card non si allarga e non si stringe al ridimensionamento dello schermo, ma occupa sempre tutto lo spazio */
+        scroll-snap-align: start;  
+      }
+      
+      /* 💻 ATTIVAZIONE PALLINI HERO: Solo da tablet/desktop in su! Su mobile restano display: none */
+      @media (min-width: 768px) {
+        
+        /* il + indica il fratello adiacente (cioè l'elemento immediatamente successivo che si trova allo stesso livello nel codice HTML)* 
+         * * nel nostro caso, seleziona i controlli posizionati SUBITO DOPO il carosello, 
+         * * entrambi racchiusi ed esistenti dentro la macro-sezione .showcase */
+        
+        .carousel--hero + .carousel__controls {
+          display: flex;
+        }
+      }
+      
+      /* ==================================
+       *  VARIANTE DESKTOP 
+       * ================================= */
+      
+      @media (min-width: 1024px) {
+        /* 2. LAYOUT CAROSELLO DESKTOP */
+        .carousel--hero {
+          max-width: 1200px;        /* Scegli la larghezza totale massima di tutta la sezione Hero */
+          margin: 0 auto;           /* Centra perfettamente l'intero carosello nello schermo */
+          padding: 0;               /* Resetta i padding per non sballare il 100% dei figli */
+        }
+        
+       
+        /* 2. LAYOUT FIGLI: la card si dispone a griglia per affiancare il testo all'immagine */
+        .carousel--hero .card {
+          display: grid;
+          grid-template-columns: 1fr 1fr; 
+          gap: 3rem;                      
+          padding: 4rem 3rem;     
+          align-items: center;    
+          min-height: 460px;      
+          position: relative;     
+          border-radius: 12px; /* 🎯 Usa lo stesso valore delle card in basso */
+          overflow: hidden;    /* Impedisce ai contenuti o sfondi interni di uscire dagli angoli curvi */
+          border: 1px solid var(--color-border); /* Opzionale: aggiunge il bordino grigio se serve */
+          flex: 0 0 100%;  /* la SINGOLA CARD copre tutto lo spazio del padre in riga unica */
+          width: 100%;
+          max-width: none;          /* Rimuove il vecchio limite altrimenti su schermi grandi si vedrebbe la card successiva */
+        }
+        
+        /* 3. Blocco informazioni */
+        .carousel--hero .card .card__info {
+          grid-column: 1; /* nella griglia occupa lo spazio a sinistra */ 
+          grid-row: 1;            
+          display: flex;
+          flex-direction: column;
+          justify-content: center; 
+          align-items: flex-start;            
+          text-align: left;
+          width: 100%;
+        }
+        
+        /* 4. Blocco immagine */
+        .carousel--hero .card .card__img {
+          grid-column: 2; /*occupa lo spazio a destra nella griglia */
+          grid-row: 1;            
+          width: 100%;
+          height: 100%;           
+          max-height: 360px; /* ridimensioniamo le immagini per evitare che su schermi grandi siano enormi */     
+          aspect-ratio: auto;     /* mantiene le proporzioni */
+          object-fit: contain;    /* l'immagine non si stretcha cercando di occupare tutto lo spazio */
+          justify-self: center;   
+        }
+      }
+      
+    }
+    
+    @layer paginated {
+      
+         
+       /* =========================================================
+        * 4.3.3 CAROSELLO VARIANTE PAGINATED
+        *   Scorrimento orizzontale di blocchi di item (impostato a 4)
+        * ===================================================== */
+      
+      /* 1 LAYOUT CAROSELLO: Il carosello fa da guscio fermo, lo scorrimento orizzontale si sposta sulla pagina */
+      .carousel--paginated {
+        flex-wrap: nowrap;         /* Impedisce alle pagine di andare a capo */
+      }
+      
+      /* 2. Il nastro trasportatore (la singola pagina) */
+      .carousel__page {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        flex: 0 0 100%;            /* 👈 FONDAMENTALE: ogni pagina occupa esattamente il 100% dello schermo */
+        width: 100%;
+        scroll-snap-align: start;  /* Ancoraggio magnetico per la pagina intera */
+        gap: var(--gap-fluid); /* distanziamentro tra le card interne al nastro trasportatore */
+      }
+      /* Le card si dividono equamente lo spazio e NON si ancorano allo scroll */
+      .carousel__page .card {
+        flex: 0 0 calc(25% - (var(--gap-fluid) * 3 / 4)); /* 👈 1. SOSTITUISCI IL FLEX:1 (Evita che le card si gonfino nella pagina 2) */
+        scroll-snap-align: none;                         /* 👈 2. CAMBIA DA 'START' A 'NONE' (Spegne la calamita sulla singola carta) */
+      }
+      /* Nasconde la scrollbar nativa su Chrome/Safari all'interno della pagina */
+      .carousel__page::-webkit-scrollbar { 
+        display: none; 
+      }
+      /* 🟢 ACCENDIAMO I PALLINI: Valido SEMPRE sia su Mobile che su Desktop per questa variante */
+      .carousel--paginated + .carousel__controls {
+        display: flex;
+      }
+      
+    }
+  }
+  @layer card{
+       /* ==========================================================================
+          4.7 LA CARD: Contenitore principale
+        ========================================================================== */  
+ 
+    /* =========================================================================
+     * 1. LAYOUT ESTERNO
+     *   Racchiude tutti i sotto-moduli. Usiamo Flexbox verticale per impilare
+         ordinatamente l'immagine, le informazioni e il pulsante finale. 
+    ============================================================================*/
+    .card {
+      position: relative; /*riferimento per alcuni componenti absolute (badge o widget) */
+      display: flex;
+      flex-direction: column; /* Incolonna verticalmente l'immagine e le informazioni */
+      background-color: white;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden; /* Taglia l'immagine sui bordi arrotondati della card */
+
+      /*Gestisce tutte le transizioni insieme, mantenendo il cubic-bezier sul movimento */
+      transition: 
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+        box-shadow 0.3s ease,
+        opacity 0.3s ease;
+    }
+    /* PASSAGGIO MOUSE: la card si alza leggermente e viene mostrata l'ombreggiatura */
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 2.1 AREA IMMAGINE */
+    .card__img {
+      width: 100%;
+      aspect-ratio: 16 / 9; /* mantiene il formato 16:9 tipico degli schermi */
+      max-height: 240px; /* 👈 Blocca l'altezza massima */
+      object-fit:contain; /* non ritagliare mai l'immagine, ma di rimpicciolirla finché non entra tutta intera dentro il box */
+    }
+
+    /* 2.2 AREA TESTUALE*/
+    .card__info {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Occupa tutto lo spazio verticale rimasto libero nella card */
+      gap: 0.5rem;  /* Crea una spaziatura standard tra titolo, descrizione e infobox */
+    }
+ 
+    /* 2.3 TIPOGRAPHY */
+    .card__info p {
+      font-size: var(--fs-body);
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+      /* 🎯 LE 4 RIGHE PER TRONCARE A MASSIMO 3 RIGHE CON I TRE PUNTINI (...) */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;           /* 💡 Cambia questo numero se vuoi 2 o 4 righe */
+      -webkit-box-orient: vertical;  
+      overflow: hidden;                /* Nasconde tutto il testo che avanza */
+    }
+
+    /* 2.4 LA CALL TO ACTION */
+    /*Calamita il Master Component sul fondo della scheda */
+    .card__info .cta-btn {
+      margin-top: auto; /* Mangia lo spazio vuoto residuo e blocca il tasto in basso */
+    }
+  }
+  @layer infobox {
+ 
+       /* ==========================================================================
+          4.8 INFOBOX: Informazioni aggiuntive
+        ========================================================================== */  
+ 
+    /* =========================================================================
+     * 1. LAYOUT ESTERNO
+    ============================================================================*/
+    .infobox {
+      display: flex;
+      flex-direction: row;        /* Mette i due macro-gruppi uno accanto all'altro */
+      justify-content: flex-start; /* 👈 Spinge entrambi i gruppi completamente a sinistra */
+      gap: 2.5rem;                /* 🎯 Crea una distanza elegante e fissa tra i prezzi e il rating */
+      align-items: flex-end;      /* Allinea le basi inferiori dei due gruppi */
+      width: 100%;
+       margin-bottom: 1.5rem; /* Puoi aumentare a 2rem se desideri ancora più respiro */
+    }
+
+    /* 2. GRUPPO DI INFORMAZIONI */
+    .infobox__meta {
+      display: flex;
+      flex-direction: column;     /* Incolonna i tag interni per evitare sovrapposizioni verticali */
+      gap: 0.75rem;               /* Controlla lo spazio tra il prezzo corrente, vecchio e IVA */
+      align-items: flex-start;    /* Allinea i testi a sinistra all'interno del proprio blocco */
+    }
+ 
+    /* 2.1.1 PREZZO ATTUALE */
+    .infobox__price--now {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--color-text-dark);
+    }
+
+    /* 2.1.2 PREZZO VECCHIO */
+    .infobox__price--old {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+
+    /* 2.2 NOTE LEGALI/TASSE */
+    .infobox__tax {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+ 
+    /* 2.3 GIACENZA MAGAZZINO */
+    .infobox__stock {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--color-text-dark);
+    }
+    /* 2.4 RATINGS */
+    .infobox__rating {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+  }
+}

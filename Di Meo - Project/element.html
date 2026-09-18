@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta name="author" content="Giovanni Di Meo">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title> Home - TechStore </title>
+  </head>
+  <body>
+    <header> 
+      <h1> TechStore </h1>
+    
+      <nav> 
+        <ul>
+          <li> <a href="#smartphone"> Catalogo - Smartphone </a> </li>
+          <li><a href="#tablet"> Catalogo - Tablet </a></li>
+          <li><a href="product.html"> vai alla pagina prodotti </a></li>
+          </ul>
+      </nav> 
+    
+    </header>
+     
+    <main> 
+      <section id="#smartphone">
+        <h2> Catalogo - Smartphone </h2>
+        <article>
+          <h3> Iphone Fold - PRO </h3>
+            <figure>
+              <img src="media/iphone-fold.jpg" alt="iPhone Fold aperto" loading="lazy" width="300">
+              <figcaption>Figura 1: Il design del display pieghevole.</figcaption>
+            </figure>
+            <p> il primo <em> foldable phone </em> di casa Apple disponibile 
+              da <strong>Settembre</strong>.  
+              scarica <a href="media/manuale.pdf">qui</a> il manuale di istruzioni
+            </p>
+           <aside>
+             <p>
+                Recensito con il massimo dei voti su <cite>Wired Italia</cite> 
+                come"miglior smartphone per distacco dell'anno".
+             </p>
+                <figure>
+                  <video comtrols poster="media/icona-link.jpg" width="450" autoplay muted>
+                    <source src="media/recensione-iphone.mp4" type="video/mp4" media="(max-width: 600px)">
+                    <source src="media/recensione-iphone.webm" type="video/webm">
+                    impossibile caricare il video
+                 </video>
+                 <figcaption> Video 1: Recensione Wired </figcaption>
+              </figure>
+             
+            </aside>
+            <details>
+              <summary>Visualizza Specifiche Tecniche</summary>
+              <h4> Specifiche Tecniche </h4>
+              <dl>
+                <dt> Memoria RAM </dt>
+                <dd> Memoria da <em> 16GB espandibile </em> acquistabile online.</dd>  
+              </dl>
+             </details>
+            <div>
+            </div>
+            <h5>Come ordinare:</h5>
+              <ol>
+                <li>Aggiungi il prodotto al carrello.</li>
+                <li>Inserisci i dati di spedizione.</li>
+                <li>Invia il pagamento in totale sicurezza.</li>
+              </ol>
+            </article>
+      </section>
+      
+      <section id="tablet">
+        <h2> Catalogo - Tablet </h2>
+        <picture>
+          <source media="(max-width: 600px)" srcset="media/banner-tablet-mobile.jpg">
+          <img src="media/banner-tablet-desktop.jpg" alt="Nuova gamma iPad" loading="lazy" width="500">
+        </picture>
+        <p>Ascolta la nostra audio-guida alla scelta dell'iPad ideale:</p>
+        <figure>
+          <audio controls>
+            <source src="media/guida-tablet.mp3" type="audio/mpeg">
+            Il tuo browser non supporta l'audio html.
+         </audio>
+          <figcaption> Audio 1: guida scelta tablet </figcaption>
+        </figure>  
+        <article>
+          <h3>Video Recensione YouTube</h3>
+          <figure>
+              <iframe src="https://youtube.com" 
+              title="Recensione Tablet dello specialista" 
+              width="560" 
+              height="315" 
+              loading="lazy"
+              sandbox="allow-scripts" 
+              allowfullscreen>
+              </iframe>
+           <figcaption>Video 2: Approfondimento video da fonte esterna</figcaption>
+          </figure>
+        </article>      
+      </section>
+    </main>
+    
+    <footer> 
+      <small> «© 2026 TechStore SRL - Tutti i diritti riservati» </small>
+    </footer>
+   
+   </body>
+    
+</html>

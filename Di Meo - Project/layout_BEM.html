@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Giovanni Di Meo">
+  <!-- Scarico da Google Fonts i caratteri che mi piacciono -->
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" type="text/css" href="css/style_BEM.css">
+  <title>E-commerce Lab - Doppia Vetrina Professionale</title>
+</head>
+<body>
+<div class="site-container">
+ <header>
+    <nav class="navbar">
+        <span class="nav__logo">🛒 IL MIO NEGOZIO</span>
+        
+        <!-- 🟢 LA LISTA PROFESSIONALE -->
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Prodotti</a></li>
+            <li><a href="#">Contatti</a></li>
+        </ul>
+    </nav>
+</header>
+  
+  <main>
+  
+
+    <!-- =====================================================================
+       VETRINA 1: NUOVI ARRIVI (Layout Emozione / Banner Singolo)
+       ===================================================================== -->
+    
+  <!-- ==========================================
+     VETRINA: NUOVI ARRIVI (CAROSELLO HERO)
+     ========================================== -->
+<section class="showcase showcase--hero">
+  <h2 class="showcase__title">Nuovi Arrivi</h2>
+  
+  <!-- IL BLOCCO CAROSELLO: Struttura piatta, le card sono figli diretti -->
+  <div class="carousel carousel--hero">
+
+    <!-- 📱 Scheda Prodotto 1 -->
+    <article class="card">
+      <img class="card__img" src="media/iPhone_13_Pro.jpg" alt="iPhone 13 nero sul tavolo">
+      
+      <div class="card__info">
+        <h3>iPhone 13</h3>
+        <h4>Variante Standard</h4>
+        <p>Il display super brillante racchiuso in un design robusto, ergonomico e resistente.</p>
+        
+        <div class="infobox">
+          <div class="infobox__meta">
+            <span class="infobox__price--now">179.00€</span>
+            <span class="infobox__price--old"><del>499.00€</del></span>
+            <span class="infobox__tax">IVA inclusa</span>
+          </div>
+          <div class="infobox__meta"> 
+            <span class="infobox_rating"> ⭐ 4.8</span>
+           <span class="infobox__status"> Disponibile</span>
+          </div>
+         
+        </div>
+        
+        <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+      </div>
+      
+      <!-- 🟢 IL BADGE RIMANE IN FONDO AL MARKUP COME DA TUA STRUTTURA -->
+      <div class="badge badge--discount">sconto 10%</div>
+    </article>
+
+    <!-- 📱 Scheda Prodotto 2 -->
+    <article class="card">
+      <img class="card__img" src="https://picsum.photos" alt="MacBook aperto su una scrivania bianca">
+      
+      <div class="card__info">
+        <h3>iPhone 13 Pro</h3>
+        <h4>Variante Premium</h4>
+        <p>Un sistema di fotocomposizione decisamente più potente. Un display così fluido e reattivo.</p>
+        
+        <div class="infobox">
+          <div class="infobox__meta">
+            <span class="infobox__price--now">179.00€</span>
+            <span class="infobox__price--old"><del>499.00€</del></span>
+            <span class="infobox__tax">IVA inclusa</span>
+          </div>
+          <div class="infobox__meta"> 
+            <span class="infobox_rating"> ⭐ 4.8</span>
+           <span class="infobox__status"> Disponibile</span>
+          </div>
+         
+        </div>
+        
+        <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+      </div>
+    </article>
+
+    <!-- 📱 Scheda Prodotto 3 -->
+    <article class="card">
+      <img class="card__img" src="https://picsum.photos" alt="iPhone mini tenuto in mano">
+      
+      <div class="card__info">
+        <h3>iPhone 13 Mini</h3>
+        <h4>Variante Pocket</h4>
+        <p>Grande potenza, performance grafiche eccellenti e tecnologie evolute in formato tascabile.</p>
+        
+         <div class="infobox">
+          <div class="infobox__meta">
+            <span class="infobox__price--now">179.00€</span>
+            <span class="infobox__price--old"><del>499.00€</del></span>
+            <span class="infobox__tax">IVA inclusa</span>
+          </div>
+          <div class="infobox__meta"> 
+            <span class="infobox_rating"> ⭐ 4.8</span>
+           <span class="infobox__status"> Disponibile</span>
+          </div>
+         
+        </div>
+        
+        <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+      </div>
+    </article>
+  </div> <!-- Fine carousel -->
+  <div class="carousel__controls">
+   <button class="carousel__dot carousel__dot--active" aria-label="Pagina 1"></button>
+    <button class="carousel__dot" aria-label="Pagina 2"></button>
+    <button class="carousel__dot" aria-label="Pagina 3"></button>
+  </div>
+</section>
+
+
+   <!-- =====================================================================
+       VETRINA 2: PRODOTTI IN OFFERTA (Layout Griglia Desktop Classica)
+       ===================================================================== -->
+  <section class="showcase">
+    <h2 class="showcase__title">Sconti Speciali</h2>
+    
+    <!-- CAROSELLO FLEXBOX 2 -->
+    <div class="carousel">
+      
+      <!-- Scheda Prodotto 1 -->
+      <article class="card">
+        <img class="card__img" src="media/Apple_AirPods.jpg" alt="Cuffie audio professionali">
+         <div class="card__info">
+          <h3>AirPods 3</h3>
+          <h4>Audio Spaziale</h4>
+          <p>Un'esperienza d'ascolto completamente rinnovata, con equalizzazione adattiva e una batteria che dura più a lungo.</p>
+            <!-- 🎯 LA TUA CLASSE PROFESSIONALE MULTI-ELEMENTO -->
+         <div class="infobox">
+           <!-- Gruppo di Sinistra: Prezzi e Tasse -->
+           <div class="infobox__meta">
+             <span class="infobox__price--current">179.00€</span>
+             <span class="infobox__price--old"><del>499.00€</del></span>
+             <span class="infobox__tax">IVA inclusa</span>
+           </div>
+           <!-- Gruppo di Destra: Rating e Logistica -->
+           <div class="infobox__meta">
+             <span class="infobox__rating">⭐ 4.8</span>
+             <span class="infobox__--stock">Disponibile</span>
+           </div>
+         </div>
+         <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+         </div>
+        
+      </article>
+
+      <!-- Scheda Prodotto 2 -->
+      <article class="card">
+        <img class="card__img" src="media/AppleWatch_Series7.jpg" alt="Orologio smart sul polso">
+        <div class="card__info">
+          <h3>Apple Watch 7</h3>
+          <h4>Display Più Grande</h4>
+          <p>Il display Retina screen più ampio di sempre, ricarica ultra rapida e monitoraggio costante dei parametri vitali.</p>
+            <div class="infobox">
+           <!-- Gruppo di Sinistra: Prezzi e Tasse -->
+           <div class="infobox__meta">
+             <span class="infobox__price--current">179.00€</span>
+             <span class="infobox__price--old"><del>499.00€</del></span>
+             <span class="infobox__tax">IVA inclusa</span>
+           </div>
+           <!-- Gruppo di Destra: Rating e Logistica -->
+           <div class="infobox__meta">
+             <span class="infobox__rating">⭐ 4.8</span>
+             <span class="infobox__--stock">Disponibile</span>
+           </div>
+         </div>
+          <a href="#" class="cta-btn">Aggiungi al Carrello</a>  
+        </div>
+        
+      </article>
+
+      <!-- Scheda Prodotto 3 -->
+      <article class="card">
+        <img class="card__img" src="https://picsum.photos" alt="Custodia protettiva per smartphone">
+         <div class="card__info">
+          <h3>MagSafe Case</h3>
+          <h4>Accessorio Originale</h4>
+          <p>In silicone morbido all'esterno, protegge il telefono dai graffi e si aggancia istantaneamente con i magneti integrati.</p>
+         </div>
+      </article>  
+        <!-- Scheda Prodotto 4 -->
+      
+        <article class="card">
+        <img class="card__img" src="https://picsum.photos" alt="Custodia protettiva per smartphone">
+         <div class="card__info">
+          <h3>MagSafe Case</h3>
+          <h4>Accessorio Originale</h4>
+          <p>In silicone morbido all'esterno, protegge il telefono dai graffi e si aggancia istantaneamente con i magneti integrati.</p>
+         </div>
+      </article>
+        
+         
+       
+     </div> <!-- Fine carousel -->
+  <div class="carousel__controls">
+   <button class="carousel__dot carousel__dot--active" aria-label="Pagina 1"></button>
+    <button class="carousel__dot" aria-label="Pagina 2"></button>
+    <button class="carousel__dot" aria-label="Pagina 3"></button>
+  </div>
+  </section>
+    <!-- =====================================================================
+       VETRINA 3: BEST SELLER (Layout Laboratorio - Scroll a blocchi di 4)
+       ===================================================================== -->
+  <section class="showcase">
+    <h2 class="showcase__title">I più venduti (Scroll a Blocchi di 4)</h2>
+    
+    <!-- Aggiunta la classe condizionale .paginato -->
+    <div class="carousel">
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Cuffie">
+          <div class="card__info">
+            <h3>Prod A</h3>
+            <p>Descrizione breve prodotto del catalogo.</p>
+            <div class="infobox">
+           <!-- Gruppo di Sinistra: Prezzi e Tasse -->
+           <div class="infobox__meta">
+             <span class="infobox__price--current">179.00€</span>
+             <span class="infobox__price--old"><del>499.00€</del></span>
+             <span class="infobox__tax">IVA inclusa</span>
+           </div>
+           <!-- Gruppo di Destra: Rating e Logistica -->
+           <div class="infobox__meta">
+             <span class="infobox__rating">⭐ 4.8</span>
+             <span class="infobox__--stock">Disponibile</span>
+           </div>
+         </div>
+         <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+         </div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Watch">
+          <div class="card__info"><h3>Prod B</h3><p>Descrizione breve prodotto del catalogo.</p></div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Cover">
+          <div class="card__info">
+            <h3>Prod C</h3>
+            <p>Descrizione breve prodotto del catalogo.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Cover">
+          <div class="card__info"><h3>Prod D</h3><p>Descrizione breve prodotto del catalogo.</p></div>
+        </article>
+
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Cover">
+          <div class="card__info"><h3>Prod E (Orfano)</h3><p>Sono da solo nella pagina 2 ma non rompo il layout!</p></div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Cover">
+          <div class="card__info"><h3>Prod F (Orfano)</h3><p>Sono da solo nella pagina 2 ma non rompo il layout!</p></div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="https://picsum.photos" alt="Cover">
+          <div class="card__info"><h3>Prod G (Orfano)</h3><p>Sono da solo nella pagina 2 ma non rompo il layout!</p></div>
+        </article>
+     </div> <!-- Fine carousel -->
+  <div class="carousel__controls">
+   <button class="carousel__dot carousel__dot--active" aria-label="Pagina 1"></button>
+    <button class="carousel__dot" aria-label="Pagina 2"></button>
+    <button class="carousel__dot" aria-label="Pagina 3"></button>
+  </div>
+  </section>
+    </main>
+  </div>
+    <footer> 
+      <small> «© 2026 TechStore SRL - Tutti i diritti riservati» </small>
+    </footer>
+  <div class="widget"> 
+    <a href="#" class="cta-btn">W</a> 
+  </div>
+  
+</body>
+</html>
+

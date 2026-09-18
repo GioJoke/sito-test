@@ -1,0 +1,628 @@
+/* ==========================================================================
+   1. LA LEGGE DEL RESET UNIVERSALE
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   2. STRUTTURA LOGICA BASE (Layout Globale Mobile-First)
+   ========================================================================== */
+body {
+    font-family: 'Helvetica', Arial, sans-serif;
+    padding: 1.5rem;
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column; /* Sviluppo verticale delle macro-aree */
+    gap: 2.5rem;
+}
+
+main {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem; /* Spazio proporzionato e leggero per lo schermo del telefono */
+}
+
+/* ==========================================================================
+   3. COMPONENTI DI INTERFACCIA GLOBALI (Header, Navbar, Widget, Footer)
+   ========================================================================== */
+
+/* --- HEADER & NAVBAR --- */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Sicurezza per non finire sotto i prodotti */
+}
+
+.navbar-shop {
+    background-color: #1e293b;
+    color: white;
+    font-weight: bold;
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;          /* Sdraia i tag <li> in orizzontale */
+    gap: 1.5rem;            /* Gestisce lo spazio tra i link in modo moderno */
+    list-style: none;       /* CANCELLA I PALLINI NERI DELLA LISTA */
+    margin: 0;              
+    padding: 0;             
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;  /* Rimuove la sottolineatura */
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: #0f172a;   /* Grigio scuro per staccare dal fondo */
+    color: #94a3b8;
+    text-align: center;
+    padding: 2rem 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*===================================================================
+   COMPONENTE 3: CAROUSEL CONTROL & SCROLL OPTIMIZATION
+   =================================================================== */
+
+/* 📱 1. STATO BASE: OTTIMIZZAZIONE UX MOBILE & TOUCH */
+
+.carousel-controls {
+    position: relative;        /* 🎯 LA GABBIA: Fa da ancora spaziale per le frecce assolute */
+    width: 100%;
+    margin: 0 4px;
+}
+
+/* Di default (su smartphone) le frecce NON devono esistere nell'interfaccia */
+.carousel-arrow {
+    display: none; 
+}
+
+/* 🎯 TRUCCO DISABILITAZIONE BARRA DI SCORRIMENTO */
+.project-cards-carousel {
+    scrollbar-width: none;     /* Per Firefox: nasconde la barra mantenendo lo swipe attivo */
+    -ms-overflow-style: none;  /* Per Internet Explorer / vecchi Edge */
+}
+
+/* Per tutti i browser moderni basati su Chromium (Chrome, Safari, Edge, Opera) */
+.project-cards-carousel::-webkit-scrollbar {
+    display: none;             /* Rende la barra di scorrimento totalmente invisibile */
+}
+
+
+/* 💻 2. STATO EVOLUTO: VERSIONE DESKTOP (Schermi da 1024px in su) */
+@media  (min-width: 1024px) {
+    
+    .carousel-arrow {
+        position: absolute;    /* 🎯 Sgancia la freccia dal flusso e la fa fluttuare sopra il carosello */
+        top: 50%;              /* Si posiziona esattamente a metà dell'altezza del padre */
+        transform: translateY(-50%); /* Bilancia l'altezza stessa del bottone per centrarlo al pixel */
+       
+        /* Estetica minimale e funzionale */
+        background-color: rgba(30, 41, 59, 0.9); /* Sfondo scuro semitrasparente */
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        
+        /* Standard Usabilità: 44px di diametro minimo per un click immediato */
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;    /* Cerchio perfetto */
+        
+        /* Centratura interna del simbolo < o > */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        font-weight: bold;
+        z-index: 10;           /* Sicurezza per galleggiare sopra alle immagini dei prodotti */
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Micro-interazione al passaggio del mouse */
+    .carousel-arrow:hover {
+        background-color: #10b981; /* Vira sul verde aziendale */
+        transform: translateY(-50%) scale(1.1); /* Si ingrandisce leggermente senza perdere la centratura */
+    }
+
+    /* ⚓ ANCORAGGI GEOMETRICI OPPOSTI */
+    .carousel-arrow.prev {
+        left: 0;           /* Esce fuori dal bordo sinistro di metà del suo diametro */
+    }
+
+    .carousel-arrow.next {
+        right: 0;          /* Esce fuori dal bordo destro */
+    }
+}
+
+/* --- WIDGET CHAT --- */
+.widget-chat-vocale {
+    background-color: #10b981; /* Verde Discord/WhatsApp */
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Diventa un cerchio perfetto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    position: fixed;
+    bottom: 20px;  /* Ancorato a 20px dal fondo dello schermo */
+    right: 20px;   /* Ancorato a 20px da destra */
+    z-index: 999;  /* Sopra a tutti i prodotti! */
+}
+
+/* ==========================================================================
+   4. STRUTTURA DELLE VETRINE (Contenitori Macroscopici dei Prodotti)
+   ========================================================================== */
+.vetrina-titolo {
+    font-size: 1.5rem;
+    color: #111827;
+    margin-bottom: 2rem;
+}
+
+/* Caroselli/Vetrina: Stato base di default */
+.project-cards-carousel {
+    display: flex;
+}
+
+/* --- [LAYOUT 1] - VETRINA ".default" -> FEED VERTICALE CON PROTEZIONE OVERFLOW --- */
+.project-cards-carousel.default {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* 🎯 AGGIORNATO: Esteso il selettore :has anche alla variante .paginato */
+.project-cards-carousel.default:has(.product-card:nth-child(4)),
+.project-cards-carousel.default.paginato:has(.product-card:nth-child(4)) {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1.5rem; 
+    -webkit-overflow-scrolling: touch;
+}
+
+/* --- [LAYOUT 2] - VETRINA ".hero" -> LIST-CARD HERO (Scatto Singolo) --- */
+.project-cards-carousel.hero {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    gap: 0;                            /* Unisce le card per effetto nastro continuo */
+    padding-bottom: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   5. IL COMPONENTE MASTER: LA SCHEDA PRODOTTO (Box Model & Grafica)
+   ========================================================================== */
+.product-card {
+    position: relative; 
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    display: flex;
+    flex-direction: column; 
+    gap: 0.75rem;
+    flex: 0 0 auto;                    /* IMPEDISCE LO SCHIACCIAMENTO DEI BOX IN ORIZZONTALE */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* --- [COMPATTAMENTO DEFAULT STATO BASE] - Limita la larghezza se è verticale --- */
+.project-cards-carousel.default .product-card {
+    flex: 0 1 340px;                   /* Ritorna a 340px occupando lo spazio corretto */
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+}
+
+/* --- [ADATTAMENTO LAYOUT 1] - COMPORTAMENTO CARD NELLO SWITCH ".default" --- */
+  /* 🎯 AGGIORNATO: Esteso il comportamento mobile delle card anche a .paginato */
+.project-cards-carousel.default:has(.product-card:nth-child(4)) .product-card,
+.project-cards-carousel.default.paginato:has(.product-card:nth-child(4)) .product-card {
+    flex: 0 0 85%;                     /* Cambia l'ampiezza lasciando il 15% di anteprima */
+    max-width: 290px;                  /* Mette un freno: la card non supererà MAI i 290px anche se lo schermo è enorme! */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    scroll-margin-left: 1rem;
+}
+
+/* --- [ADATTAMENTO LAYOUT 2] - TRASFORMAZIONE CARD NELL'HERO ".hero" --- */
+.project-cards-carousel.hero .product-card {
+    flex: 0 0 100%;                    /* Ogni singola card copre l'intero schermo */
+    max-width: none;                   /* Rimuove il blocco dei 340px */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    border-radius: 0;                  /* Rimuove gli angoli per effetto banner */
+    border-left: none;                 /* Cancella i bordi laterali per evitare doppie linee */
+    border-right: none;
+
+    /* Cambia la struttura interna da Flex verticale a Griglia Orizzontale */
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* Foto a sinistra, testi fluidi a destra */
+    align-items: center;
+    gap: 1.25rem;
+    /* 🎯 AGGIUNTA: Alza l'intero banner Hero sul mobile */
+    min-height: 260px; 
+}
+
+/* ==========================================================================
+   STRUTTURA SPECIFICA PER IL LAYOUT PAGINATO (Scroll a Blocchi)
+   ========================================================================== */
+
+/* Il contenitore della pagina deve visualizzare le sue card in una griglia o linea */
+.project-cards-carousel.paginato .page-group {
+    display: flex;
+    flex-direction: row;       /* Sdraia le 4 card di ogni blocco in orizzontale */
+    gap: 1rem;                 /* Spazio tra le card interne alla pagina */
+    flex: 0 0 100%;            /* Ogni pagina occupa esattamente il 100% della larghezza del carosello */
+    scroll-snap-align: start;  /* Aggancia l'inizio della pagina durante lo scroll */
+}
+
+
+
+/* --- STATI INTERATTIVI & FILTRI DI CAMPO --- */
+.product-card:hover {
+    transform: translateY(-6px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); 
+}
+
+.project-cards-carousel:hover .product-card:not(:hover) {
+    opacity: 0.4;       
+    filter: blur(1px);  
+}
+
+/* ===================================================================
+    L'AREA CONTESTO (STICKY INFO BOX)
+   =================================================================== */
+
+/* Il binario principale mantiene la separazione estrema */
+.sticky-info-box {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Allinea gli elementi sulla linea di fondo */
+    width: 100%;
+}
+
+/* Sotto-gruppo sinistro: incolonna i prezzi e le micro-scritte */
+.info-group-start {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Sotto-gruppo destro: allinea le stelline e lo stock in modo ordinato */
+.info-group-end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Allinea i testi a destra */
+    gap: 0.25rem;
+}
+
+/* Formattazione e Stile Minimale */
+.meta-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #10b981; /* Verde smeraldo: dà un accento visivo al prezzo attivo */
+}
+
+.meta-info {
+    font-size: 0.9rem;
+    color: #9ca3af; /* Grigio neutro: non compete visivamente con il label */
+}
+/* --- STILI TIPOGRAFICI DI DETTAGLIO --- */
+.price-current {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #111827;            /* Grigio molto scuro/nero per il prezzo attivo */
+}
+
+.price-old {
+    font-size: 0.9rem;
+    color: #6b7280;            /* Grigio medio per il vecchio prezzo */
+}
+
+.text-tax {
+    font-size: 0.75rem;
+    color: #9ca3af;            /* Micro-testo chiaro per i dettagli legali */
+}
+
+.product-rating {
+    font-weight: bold;
+    color: #f59e0b;            /* Colore ambra/oro per la stella del rating */
+}
+
+.product-stock {
+    color: #111827;
+}
+
+/* ===================================================================
+   COMPONENTE 2: IL PULSANTE JOLLY (CTA INTERATTIVA)
+   =================================================================== */
+
+.cta-btn {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    justify-content: center;
+    width: 100%;                  /* Copre l'intera larghezza della card */
+    padding: 0.85rem;             /* Generoso cuscinetto interno per massimizzare l'area di tocco */
+    background-color: #1e293b;    /* Blu lavagna scuro elegante */
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;        /* Cancella la sottolineatura nativa dei link */
+    border-radius: 8px;           /* Angoli smussati moderni in linea con il Box Model della card */
+    text-align: center;
+    font-size: 0.95rem;
+    
+    /* 📈 EFFETTO ELASTICO: Transizione fluida su sfondo e traslazione */
+    transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* --- STATI INTERATTIVI (MICRO-INTERAZIONI) --- */
+
+/* Quando l'utente passa il mouse sopra il pulsante */
+.cta-btn:hover {
+    background-color: #10b981;    /* Variazione cromatica shock: vira sul verde smeraldo dell'azione */
+    transform: translateY(-2px);  /* Micro-sollevamento geometrico tridimensionale */
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); /* Bagliore morbido coordinato */
+}
+
+/* Quando l'utente clicca fisicamente sul pulsante */
+.cta-btn:active {
+    transform: translateY(0);     /* Torna a livello zero simulando lo schiacciamento meccanico */
+    filter: brightness(0.9);      /* Scura leggermente il colore per dare feedback di pressione */
+}
+
+
+/* --- LOGICHE CONDIZIONALI (SCONTI & ANIMAZIONI) --- */
+.product-card:has(.badge-sconto) {
+    border-color: #fca5a5; 
+}
+
+.product-card:has(.badge-sconto):hover {
+    background-color: #fffaf0; 
+    border-color: #fca5a5;
+}
+
+.badge-sconto {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10; 
+    background-color: #ef4444; 
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    animation: battitoSconto 2s ease-in-out infinite alternate;
+}
+
+@keyframes battitoSconto {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 6px 12px rgba(239, 68, 68, 0.4);
+        filter: brightness(1.1);
+    }
+}
+
+/* --- ELEMENTI INTERNI ALLA CARD (Multimedia & Tipografia) --- */
+.product-image {
+    width: 100%;
+    height: 180px; 
+    object-fit: cover; 
+    border-radius: 6px;
+    background-color: #E5E7EB;
+}
+
+.product-card .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;       /* Gestisce lo spazio verticale tra h2, h3 e p */
+    padding: 0.25rem;  /* Crea un micro-cuscinetto di sicurezza interno per i testi */
+      /* 📈 LO SPAZIATORE INTELLIGENTE:
+       Dice al blocco dei testi di espandersi e occupare TUTTO lo spazio rimasto 
+       vuoto nella card, adattandosi dinamicamente all'altezza dell'immagine. */
+    flex-grow: 1;      
+}
+
+
+/* --- REGOLE DEGLI ELEMENTI INTERNI (Isolate per Layout 2) --- */
+.project-cards-carousel.hero .product-image {
+ height: 100%; 
+ object-fit: cover;
+}
+
+
+/* ==========================================================================
+   6. IL SALTO RESPONSIVE (Media Query Desktop per Monitor Grandi)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+    body {
+        display: block; /* Disattiva il flexbox verticale del mobile */
+        padding: 0;     /* Rimuove il padding per far toccare la sidebar al bordo schermo */
+    }
+
+    main {
+        margin: 0;
+        gap: 6rem;    /* Crea spazio bianco tra le vetrine */
+        padding: 3rem; /* Allontana i prodotti dai bordi del monitor e dal menu */
+    }
+
+    .site-container {
+        display: grid;
+        grid-template-columns: 300px 1fr; /* Colonna menu (300px), colonna prodotti (1fr) */
+        align-items: start;
+        margin: 0;
+    }
+
+    header {
+        position: sticky;
+        top: 0;
+        height: 100vh; /* L'header si allunga per l'altezza dello schermo */
+        z-index: 100;
+    }
+
+    .navbar-shop {
+        flex-direction: column;      /* Ruota il menu in verticale */
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 3rem 2rem;
+        height: 100%;
+        gap: 3rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       7. CANCELLAZIONE REGOLE ORIZZONTALI (Reset del Padre)
+       -------------------------------------------------------------------------- */
+    /* VETRINA DEFAULT: Spegne lo scorrimento del mobile per diventare griglia fissa */
+    .project-cards-carousel.default {
+        overflow-x: visible;        
+        overflow-y: visible;
+        scroll-snap-type: none;     
+        padding-bottom: 0;          
+        margin: 0;                  
+    }
+
+    /* 🎯 VETRINA HERO DESKTOP: MANTIENE lo scorrimento orizzontale del mobile */
+    .project-cards-carousel.hero {
+        display: flex;              /* Torna in Flex per allinearle in orizzontale */
+        flex-direction: row;
+        overflow-x: auto;           /* Lascia attivo lo scroll orizzontale */
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory; /* Mantiene l'effetto calamita/scatto singolo */
+        gap: 0;                     /* Unisce le card per effetto nastro continuo */
+        padding-bottom: 1.5rem;
+        margin: 0;                  /* Resetta i margini negativi del mobile */
+        scrollbar-width: none;      /* Nasconde la barra brutta del PC su Firefox */
+    }
+    
+    .project-cards-carousel.hero::-webkit-scrollbar {
+        display: none;              /* Nasconde la barra brutta del PC su Chrome/Safari */
+    }
+    
+    /* 💎 [LAYOUT 3] - VETRINA PAGINATA: Attiva lo scroll a blocchi da 4 */
+    .project-cards-carousel.default.paginato {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;              
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory; /* Calamita rigida sul blocco-pagina */
+        gap: 2rem;                     
+        padding-bottom: 1.5rem;          
+        margin: 0;          
+        scroll-behavior: smooth;       
+    }
+
+    /* Il motore dello scroll a pagine della vetrina 3 */
+    .project-cards-carousel.default.paginato .page-group {
+        flex: 0 0 100%;                /* Ogni gruppo prende l'intera larghezza utile */
+        scroll-snap-align: start;      /* La calamita si aggancia all'inizio del gruppo */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Griglia rigida interna a 4 colonne */
+        gap: 1.5rem;                   
+    }
+    
+    /* --------------------------------------------------------------------------  
+       8. RIPRISTINO E ADATTAMENTO DEI COMPONENTI (Reset delle Card)
+       -------------------------------------------------------------------------- */
+    /* Resettiamo solo le card della vetrina DEFAULT e PAGINATO per la griglia */
+    .project-cards-carousel.default .product-card,
+    .project-cards-carousel.default.paginato .product-card {
+        flex: 1 1 auto;             
+        width: 100%;                
+        max-width: none;            
+        padding: 1.25rem;           
+        border-radius: 12px;        
+        border: 1px solid #E5E7EB;  
+        margin: 0;                  
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    /* 🎯 CARD HERO DESKTOP: Diventa un unico grande banner panoramico a scatto singolo */
+    .project-cards-carousel.hero .product-card {
+        flex: 0 0 100%;             /* 🎯 FONDAMENTALE: Ogni card occupa esattamente il 100% dello spazio visibile */
+        width: 100%;
+        max-width: none;            
+        margin: 0;                  
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        border-radius: 16px;        /* Arrotondiamo i bordi visto che ora è una card desktop isolata */
+        border: 1px solid #E5E7EB;  /* Ripristiniamo i bordi completi */
+        padding: 3rem;              /* Massimo respiro interno per testi e foto */
+
+        /* Mantiene la griglia interna orizzontale (Foto a sx, testi a dx) */
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr; 
+        align-items: center;
+        gap: 4rem;                  /* Grande spazio di separazione tra foto e testi */
+        min-height: 450px;          /* Un'altezza imponente da vero blocco Hero desktop */
+    }
+    
+    /* --------------------------------------------------------------------------
+       9. TRASFORMAZIONE DELLA VETRINA DEFAULT IN GRID LAYOUT
+       -------------------------------------------------------------------------- */
+    .project-cards-carousel.default {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem; 
+    }
+    
+    /* -------------------------------------------------------------------------- 
+       10. RESET MULTIMEDIA E TIPOGRAFIA
+       --------------------------------========================================== */
+    .project-cards-carousel.default .product-image {
+        height: 180px;              
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* 🎯 IMMAGINE HERO DESKTOP: Si adatta alle nuove proporzioni del banner */
+    .project-cards-carousel.hero .product-image {
+        width: 100%;
+        height: 100%;               /* Sfrutta tutta l'altezza della griglia interna */
+        min-height: 380px;          
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .project-cards-carousel.default .product-info p,
+    .project-cards-carousel.hero .product-info p {
+        -webkit-line-clamp: 2;      
+    }
+
+    /* Disattiva l'effetto sfocatura del mobile solo per la griglia default su desktop */
+    .project-cards-carousel.default:hover .product-card:not(:hover) {
+        opacity: 1;
+        filter: none;
+    }
+
+
+}

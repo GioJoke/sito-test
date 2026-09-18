@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>TechShop - Configura e Acquista</title>
+</head>
+<body>
+
+    <!-- HEADER DI NAVIGAZIONE -->
+    <header>
+        <h1>TechShop - Area Acquisti</h1>
+        <nav>
+            <a href="index.html">Torna al Catalogo (Home)</a> |
+        </nav>
+    </header>
+    <main>
+     <section id="comparazione">
+        <h2>Confronta i nostri modelli prima dell'acquisto</h2>
+        <p>Analizza le differenze tecniche tra i modelli della nostra gamma per fare la scelta migliore.</p>
+        <hr>
+        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Caratteristica</th>
+                    <th> Smartphone X200 (Base)</th>
+                    <th>Smartphone X200 Pro</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Prezzo di partenza</strong></td>
+                    <td>599,00 €</td>
+                    <td>799,00 €</td>
+                </tr>
+                <tr>
+                    <td><strong>Memoria RAM</strong></td>
+                    <td>8 GB</td>
+                    <td>16 GB (Espandibile)</td>
+                </tr>
+                <tr>
+                    <td><strong>Spazio di Archiviazione</strong></td>
+                    <td>128 GB</td>
+                    <td>256 GB / 512 GB</td>
+                </tr>
+                <tr>
+                    <td><strong>Fotocamera Principale</strong></td>
+                    <td>50 MP</td>
+                    <td>108 MP con Zoom Ottico</td>
+                </tr>
+                <tr>
+                    <td><strong>Incisione Laser Retro</strong></td>
+                    <td>Non disponibile</td>
+                    <td>Inclusa nel prezzo (Personalizzabile)</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><strong>Consigliato per:</strong></td>
+                    <td>Utilizzo quotidiano e social</td>
+                    <td>Professionisti e amanti della fotografia</td>
+                </tr>
+            </tfoot>
+        </table>
+      </section>
+      <hr>
+
+    <!-- SEZIONE 2: FORM D'ORDINE COMPLETO -->
+      <section id="modulo-ordine">
+        <h2>Configura il tuo ordine personalizzato</h2>
+        <p>Compila tutti i campi richiesti. I campi con validazione integrata ti aiuteranno a evitare errori.</p>
+        <form action="conferma_ordine.html" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id_prodotto" value="PROD-SMART-X200">
+        <fieldset>
+          <legend>1. Personalizzazione del Dispositivo</legend>   
+          <div>
+             <label for="modello">Configurazione Hardware desiderata:</label>
+             <select id="modello" name="variante_hardware">
+                <option value="base">Standard (8GB RAM / 128GB Storage)</option>
+                <option value="pro">Pro Edition (+100€)</option>
+                <option value="ultra">Ultra Power (+250€)</option>
+             </select>
+          </div>
+          
+          <div>
+            <label for="colore_scocca">Scegli il colore della scocca personalizzata:</label>
+            <input type="color" id="colore_scocca" name="colore_dispositivo" value="#000000">
+          </div>
+
+          <div>
+            <label for="quantita">Quantità (Massimo 5 pezzi):</label>
+            <input type="number" id="quantita" name="qta_ordine" min="1" max="5" value="1" required>
+          </div>
+
+          <div>
+            <label for="ricarica">Livello ricarica batteria alla consegna:</label>
+            <small>50%</small>
+            <input type="range" id="ricarica" name="livello_batteria" min="50" max="100" step="10" value="80">
+            <small>100%</small>
+          </div>
+
+          <div>
+            <label for="incisione">Testo per l'incisione laser personalizzata (Max 50 caratteri):</label>
+            <textarea id="incisione" name="testo_incisione" rows="3" cols="50" maxlength="50" placeholder="Scrivi qui il testo da incidere sul retro..."></textarea>
+          </div>
+        </fieldset>
+        
+        <fieldset>
+          <legend>2. Dati di Spedizione e Contatti</legend>
+            <div>
+              <label for="acquirente">Nome e Cognome Destinatario:</label>
+              <input type="text" id="acquirente" name="nome_completo" placeholder="Mario Rossi" required>
+            </div>
+            
+            <div>
+              <label for="email">Email per la Fattura:</label>
+              <input type="email" id="email" name="email_cliente" placeholder="mario.rossi@email.it" required>
+            </div>
+            
+            <div>
+              <label for="telefono">Telefono per il Corriere:</label>
+              <input type="tel" id="telefono" name="telefono_corriere" placeholder="3331234567" required>
+            </div>
+
+            <div>
+              <label for="sito_aziendale">Sito web aziendale (Opzionale per P.IVA):</label>
+              <input type="url" id="sito_aziendale" name="url_azienda" placeholder="https://miaazienda.it">
+            </div>
+
+            <div>
+              <label for="data_consegna">Data di consegna indicativa:</label>
+              <input type="date" id="data_consegna" name="data_limite_consegna">
+            </div>
+         </fieldset>
+
+    
+        <fieldset>
+          <legend>3. Pagamento e Documenti</legend>
+          <fieldset>
+          
+            <legend>Metodo di Pagamento:</legend>
+            <div>
+              <input type="radio" id="paypal" name="metodo_pagamento" value="paypal" checked> 
+              <label for="paypal">PayPal / Carta di Credito</label>
+            </div>
+            <div>
+              <input type="radio" id="bonifico" name="metodo_pagamento" value="bonifico"> 
+              <label for="bonifico">Bonifico Bancario</label>
+            </div>
+          </fieldset>
+    
+          <div>
+            <label for="password_account">Crea una password per tracciare l'ordine:</label>
+            <input type="password" id="password_account" name="password_nuovo_utente" placeholder="Scegli una password sicura">
+          </div>
+    
+          <div>
+            <label for="documento">Carica eventuale documento per IVA agevolata (PDF, JPG):</label>
+            <input type="file" id="documento" name="documento_identita" accept=".pdf, .jpg, .png">
+          </div>
+    
+          <div>
+            <label>
+              <input type="checkbox" name="privacy" value="accettata" required> Accetto i termini e le condizioni di vendita
+            </label>
+          </div>
+    
+          <hr>
+    
+          <div>
+            <button type="submit">Procedi al Pagamento</button>
+            <button type="reset">Svuota Campi</button>
+          </div>
+        </fieldset>
+    
+      </form>
+    </section>
+    <hr>
+  </main>   
+  <footer>
+        <small> «© 2026 TechStore SRL - Tutti i diritti riservati»</small>
+  </footer>
+ </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Giovanni Di Meo">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>E-commerce Lab - Doppia Vetrina Professionale</title>
+</head>
+<body>
+<div class="site-container">
+ <header>
+    <nav class="navbar-shop">
+        <span class="nav-logo">🛒 IL MIO NEGOZIO</span>
+        
+        <!-- 🟢 LA LISTA PROFESSIONALE -->
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Prodotti</a></li>
+            <li><a href="#">Contatti</a></li>
+        </ul>
+    </nav>
+</header>
+  
+  <main>
+  
+
+    <!-- =====================================================================
+       VETRINA 1: NUOVI ARRIVI (Layout Emozione / Banner Singolo)
+       ===================================================================== -->
+    
+  <section class="vetrina-novita">
+    <h2 class="vetrina-titolo">🔥 Nuovi Arrivi</h2>
+    <div class="carousel-controls">
+      <div class="project-cards-carousel hero">
+         
+      <!-- Freccia Sinistra (Precedente) -->
+      <button class="carousel-arrow prev" aria-label="Prodotto precedente">‹</button>
+
+
+        <!-- Scheda Prodotto 1 -->
+       <article class="product-card">
+        <img class="product-image" src="https://picsum.photos" alt="iPhone 13 nero sul tavolo">
+         <div class="product-info">
+           <h3>iPhone 13</h3>
+           <h4>Variante Standard</h4>
+           <p>Il display super brillante racchiuso in un design robusto, ergonomico e resistente.</p>
+           <!-- 🎯 LA TUA CLASSE PROFESSIONALE MULTI-ELEMENTO -->
+           <div class="sticky-info-box">
+             <!-- Gruppo di Sinistra: Prezzi e Tasse -->
+             <div class="info-group-start">
+               <span class="price-current">179.00€</span>
+               <span class="price-old"><del>499.00€</del></span>
+               <span class="text-tax">IVA inclusa</span>
+             </div>
+             <!-- Gruppo di Destra: Rating e Logistica -->
+             <div class="info-group-end">
+               <span class="product-rating">⭐ 4.8</span>
+               <span class="product-stock">Disponibile</span>
+             </div>
+           </div>
+             <!-- 🎯 COMPONENTE 2: IL PULSANTE JOLLY -->
+              <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+         </div>
+         <div class="badge-sconto">sconto 10%</div>
+        </article>
+
+        <!-- Scheda Prodotto 2 -->
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="MacBook aperto su una scrivania bianca">
+            <div class="product-info">
+            <h3>iPhone 13 Pro</h3>
+            <h4>Variante Premium</h4>
+            <p>Un sistema di fotocomposizione decisamente più potente. Un display così fluido e reattivo che ridefinisce ogni interazione visiva quotidiana.</p>
+               <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+          </div>
+          </article>
+
+        <!-- Scheda Prodotto 3 -->
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="iPhone mini tenuto in mano">
+           <div class="product-info">
+            <h3>iPhone 13 Mini</h3>
+            <h4>Variante Pocket</h4>
+            <p>Grande potenza, performance grafiche eccellenti e tecnologie evolute in un pratico formato tascabile.</p>
+           </div>
+        </article>
+        <!-- Freccia Destra (Successivo) -->
+        <button class="carousel-arrow next" aria-label="Prodotto successivo">›</button>
+      </div>
+    </div>
+  </section>
+
+   <!-- =====================================================================
+       VETRINA 2: PRODOTTI IN OFFERTA (Layout Griglia Desktop Classica)
+       ===================================================================== -->
+  <section class="vetrina-offerte">
+    <h2 class="vetrina-titolo">🏷️ Sconti Speciali</h2>
+    
+    <!-- CAROSELLO FLEXBOX 2 -->
+    <div class="project-cards-carousel default">
+      
+      <!-- Scheda Prodotto 4 -->
+      <article class="product-card">
+        <img class="product-image" src="https://picsum.photos" alt="Cuffie audio professionali">
+         <div class="product-info">
+          <h3>AirPods 3</h3>
+          <h4>Audio Spaziale</h4>
+          <p>Un'esperienza d'ascolto completamente rinnovata, con equalizzazione adattiva e una batteria che dura più a lungo.</p>
+            <!-- 🎯 LA TUA CLASSE PROFESSIONALE MULTI-ELEMENTO -->
+         <div class="sticky-info-box">
+           <!-- Gruppo di Sinistra: Prezzi e Tasse -->
+           <div class="info-group-start">
+             <span class="price-current">179.00€</span>
+             <span class="price-old"><del>499.00€</del></span>
+             <span class="text-tax">IVA inclusa</span>
+           </div>
+           <!-- Gruppo di Destra: Rating e Logistica -->
+           <div class="info-group-end">
+             <span class="product-rating">⭐ 4.8</span>
+             <span class="product-stock">Disponibile</span>
+           </div>
+         </div>
+         <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+         </div>
+        
+      </article>
+
+      <!-- Scheda Prodotto 5 -->
+      <article class="product-card">
+        <img class="product-image" src="https://picsum.photos" alt="Orologio smart sul polso">
+        <div class="product-info">
+          <h3>Apple Watch 7</h3>
+          <h4>Display Più Grande</h4>
+          <p>Il display Retina screen più ampio di sempre, ricarica ultra rapida e monitoraggio costante dei parametri vitali.</p>
+          <a href="#" class="cta-btn">Aggiungi al Carrello</a>
+        </div>
+      </article>
+
+      <!-- Scheda Prodotto 6 -->
+      <article class="product-card">
+        <img class="product-image" src="https://picsum.photos" alt="Custodia protettiva per smartphone">
+         <div class="product-info">
+          <h3>MagSafe Case</h3>
+          <h4>Accessorio Originale</h4>
+          <p>In silicone morbido all'esterno, protegge il telefono dai graffi e si aggancia istantaneamente con i magneti integrati.</p>
+         </div>
+      </article>
+        <article class="product-card">
+        <img class="product-image" src="https://picsum.photos" alt="Custodia protettiva per smartphone">
+         <div class="product-info">
+          <h3>MagSafe Case</h3>
+          <h4>Accessorio Originale</h4>
+          <p>In silicone morbido all'esterno, protegge il telefono dai graffi e si aggancia istantaneamente con i magneti integrati.</p>
+         </div>
+      </article>
+        <article class="product-card">
+        <img class="product-image" src="https://picsum.photos" alt="Custodia protettiva per smartphone">
+         <div class="product-info">
+          <h3>MagSafe Case</h3>
+          <h4>Accessorio Originale</h4>
+          <p>In silicone morbido all'esterno, protegge il telefono dai graffi e si aggancia istantaneamente con i magneti integrati.</p>
+         </div>
+      </article>
+
+    </div>
+  </section>
+    <!-- =====================================================================
+       VETRINA 3: BEST SELLER (Layout Laboratorio - Scroll a blocchi di 4)
+       ===================================================================== -->
+  <section class="vetrina-bestseller">
+    <h2 class="vetrina-titolo">💎 I più venduti (Scroll a Blocchi di 4)</h2>
+    
+    <!-- Aggiunta la classe condizionale .paginato -->
+    <div class="project-cards-carousel default paginato">
+      <!-- PAGINA 1 (Contiene 4 elementi) -->
+      <div class="page-group">
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="Cuffie">
+          <div class="product-info"><h3>Prod A</h3><p>Descrizione breve prodotto del catalogo.</p></div>
+        </article>
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="Watch">
+          <div class="product-info"><h3>Prod B</h3><p>Descrizione breve prodotto del catalogo.</p></div>
+        </article>
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="Cover">
+          <div class="product-info"><h3>Prod C</h3><p>Descrizione breve prodotto del catalogo.</p></div>
+        </article>
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="Cover">
+          <div class="product-info"><h3>Prod D</h3><p>Descrizione breve prodotto del catalogo.</p></div>
+        </article>
+      </div>
+
+      <!-- PAGINA 2 (Contiene solo il 5° elemento orfano per testare il bug del vuoto) -->
+      <div class="page-group">
+        <article class="product-card">
+          <img class="product-image" src="https://picsum.photos" alt="Cover">
+          <div class="product-info"><h3>Prod E (Orfano)</h3><p>Sono da solo nella pagina 2 ma non rompo il layout!</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+    </main>
+  </div>
+    <footer> 
+      <small> «© 2026 TechStore SRL - Tutti i diritti riservati» </small>
+    </footer>
+  <div class="widget-chat-vocale"> W </div>
+  
+</body>
+</html>
+
